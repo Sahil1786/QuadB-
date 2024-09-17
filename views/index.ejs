@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HODLINFO</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #191d28;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        h1 {
+            color: #3dc6c1;
+            font-size: 36px;
+            margin: 0;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+        }
+        select, .btn {
+            margin-left: 10px;
+            padding: 8px 16px;
+            background-color: #2e3241;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .btn-primary {
+            background-color: #3dc6c1;
+            color: #ffffff;
+        }
+        .theme-switch {
+            width: 40px;
+            height: 40px;
+            background-color: #3dc6c1;
+            border-radius: 50%;
+            margin-left: 10px;
+        }
+        main {
+            text-align: center;
+        }
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .price-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+        .stat {
+            text-align: center;
+        }
+        .percent {
+            font-size: 24px;
+            color: #3dc6c1;
+            margin: 0;
+        }
+        .price {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 0;
+        }
+        .label {
+            color: #888888;
+            margin: 5px 0 0;
+            font-size: 14px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 40px;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #2e3241;
+        }
+        th {
+            color: #888888;
+            font-weight: normal;
+            font-size: 14px;
+        }
+        td img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        .positive {
+            color: #3dc6c1;
+        }
+        .negative {
+            color: #f44336;
+        }
+        footer {
+            text-align: center;
+        }
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid #3dc6c1;
+            color: #3dc6c1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>HODLINFO</h1>
+            <div class="header-right">
+                <select aria-label="Select currency">
+                    <option>INR</option>
+                </select>
+                <select aria-label="Select cryptocurrency">
+                    <option>BTC</option>
+                </select>
+                <button class="btn">BUY BTC</button>
+                <button class="btn btn-primary">
+                    <img src="/placeholder.svg" alt="Telegram icon" width="20" height="20"> Connect Telegram
+                </button>
+                <div class="theme-switch" role="button" aria-label="Toggle dark mode"></div>
+            </div>
+        </header>
+
+        <main>
+            <h2>Best Price to Trade</h2>
+
+            <div class="price-stats">
+                <div class="stat">
+                    <p class="percent"><%= stats[0] ? stats[0].percent : 'N/A' %></p>
+                    <p class="label">5 Mins</p>
+                </div>
+                <div class="stat">
+                    <p class="percent"><%= stats[1] ? stats[1].percent : 'N/A' %></p>
+                    <p class="label">1 Hour</p>
+                </div>
+                <div class="stat main-price">
+                    <p class="price">₹ <%= stats[2] ? stats[2].price : 'N/A' %></p>
+                    <p class="label">Average BTC/INR net price including commission</p>
+                </div>
+                <div class="stat">
+                    <p class="percent"><%= stats[3] ? stats[3].percent : 'N/A' %></p>
+                    <p class="label">1 Day</p>
+                </div>
+                <div class="stat">
+                    <p class="percent"><%= stats[4] ? stats[4].percent : 'N/A' %></p>
+                    <p class="label">7 Days</p>
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Platform</th>
+                        <th>Last Traded Price</th>
+                        <th>Buy / Sell Price</th>
+                        <th>Difference</th>
+                        <th>Savings</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% platforms.forEach((platform, index) => { %>
+                        <tr>
+                            <td><%= index + 1 %></td>
+                            <td><img src="/placeholder.svg" alt="<%= platform.name %> logo" width="20" height="20"> <%= platform.name %></td>
+                            <td>₹ <%= platform.last %></td>
+                            <td>Buy: ₹ <%= platform.buy %> / Sell: ₹ <%= platform.sell %></td>
+                            <td class="<%= platform.difference > 0 ? 'positive' : 'negative' %>"><%= platform.difference %>%</td>
+                            <td class="<%= platform.savings > 0 ? 'positive' : 'negative' %>">₹ <%= platform.savings %></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </main>
+
+        <footer>
+            <button class="btn btn-outline">Add hodlinfo to home screen</button>
+        </footer>
+    </div>
+</body>
+</html>
